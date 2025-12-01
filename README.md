@@ -1,5 +1,3 @@
----
-
 # **✅ Centralized Logging & Monitoring System (CloudWatch + Lambda + S3 + SNS)**
 
 ```md
@@ -243,6 +241,5 @@ centralized-logging/
 
 **Venkata Lingarao Andugulapati**
 GitHub: [https://github.com/VLingarao](https://github.com/VLingarao)
-Portfolio: [https://venkata-lingarao-portfolio.netlify.app](https://venkata-lingarao-portfolio.netlify.app)
 
----
+Portfolio: [https://venkata-lingarao-portfolio.netlify.app](https://venkata-lingarao-portfolio.netlify.app)
