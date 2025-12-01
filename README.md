@@ -1,7 +1,3 @@
----
-
-# ✅ **FINAL README.md (Perfect Version)**
-
 ```md
 # 📊 Centralized Logging & Monitoring System (AWS CloudWatch + Lambda + S3 + SNS)
 
