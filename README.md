@@ -1,14 +1,10 @@
-```md
 # 📊 Centralized Logging & Monitoring System (AWS CloudWatch + Lambda + S3 + SNS)
 
 A production-ready **centralized monitoring and alerting system** built on AWS using  
 **CloudWatch, Lambda (Python), SNS, S3, and IAM** to collect logs, detect failures, send alerts, and archive logs from multiple EC2/application servers.
 
----
-
 # 🏗️ Architecture Diagram
 
-```
 
 ```
                          +-----------------------------------+
@@ -55,15 +51,13 @@ A production-ready **centralized monitoring and alerting system** built on AWS u
                     +--------------------------------------------------+
 ```
 
-````md
----
+
 
 # 🚀 Overview
 
 This project implements a **centralized, automated, real-time logging and monitoring platform** for AWS EC2 and applications.  
 It detects application issues instantly, sends alerts, and stores logs long-term in S3.
 
----
 
 # 🧰 Tech Stack
 
