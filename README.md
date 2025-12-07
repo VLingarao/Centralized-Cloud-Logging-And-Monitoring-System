@@ -280,13 +280,348 @@ centralized-logging/
 
 ---
 
-# 🎯 Business Value
+   ,     #_
+   ~\_  ####_        Amazon Linux 2023
+  ~~  \_#####\
+  ~~     \###|
+  ~~       \#/ ___   https://aws.amazon.com/linux/amazon-linux-2023
+   ~~       V~' '->
+    ~~~         /
+      ~~._.   _/
+         _/ _/
+       _/m/'
+[ec2-user@ip-172-31-0-229 ~]$ sudo yum install amazon-cloudwatch-agent -y
+Amazon Linux 2023 Kernel Livepatch repository                                                                      289 kB/s |  29 kB     00:00    
+Dependencies resolved.
+===================================================================================================================================================
+ Package                                   Architecture             Version                                    Repository                     Size
+===================================================================================================================================================
+Installing:
+ amazon-cloudwatch-agent                   x86_64                   1.300060.1-1.amzn2023                      amazonlinux                    79 M
 
-* Faster incident detection (MTTR ↓)
-* Single pane of observability
-* Automated production alerting
-* Secure long-term log retention
-* SRE-level monitoring for any application
+Transaction Summary
+===================================================================================================================================================
+Install  1 Package
+
+Total download size: 79 M
+Installed size: 238 M
+Downloading Packages:
+amazon-cloudwatch-agent-1.300060.1-1.amzn2023.x86_64.rpm                                                            70 MB/s |  79 MB     00:01    
+---------------------------------------------------------------------------------------------------------------------------------------------------
+Total                                                                                                               69 MB/s |  79 MB     00:01     
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                                                                                           1/1 
+  Running scriptlet: amazon-cloudwatch-agent-1.300060.1-1.amzn2023.x86_64                                                                      1/1 
+create group cwagent, result: 0
+create user cwagent, result: 0
+
+  Installing       : amazon-cloudwatch-agent-1.300060.1-1.amzn2023.x86_64                                                                      1/1 
+  Running scriptlet: amazon-cloudwatch-agent-1.300060.1-1.amzn2023.x86_64                                                                      1/1 
+  Verifying        : amazon-cloudwatch-agent-1.300060.1-1.amzn2023.x86_64                                                                      1/1 
+
+Installed:
+  amazon-cloudwatch-agent-1.300060.1-1.amzn2023.x86_64                                                                                             
+
+Complete!
+[ec2-user@ip-172-31-0-229 ~]$ sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-config-wizard
+2025/12/03 10:13:11 Starting config-wizard, this will map back to a call to amazon-cloudwatch-agent
+2025/12/03 10:13:11 Executing /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent with arguments: [config-wizard]
+================================================================
+= Welcome to the Amazon CloudWatch Agent Configuration Manager =
+=                                                              =
+= CloudWatch Agent allows you to collect metrics and logs from =
+= your host and send them to CloudWatch. Additional CloudWatch =
+= charges may apply.                                           =
+================================================================
+On which OS are you planning to use the agent?
+1. linux
+2. windows
+3. darwin
+default choice: [1]:
+1
+Trying to fetch the default region based on ec2 metadata...
+I! imds retry client will retry 1 timesAre you using EC2 or On-Premises hosts?
+1. EC2
+2. On-Premises
+default choice: [1]:
+1
+Which user are you planning to run the agent?
+1. cwagent
+2. root
+3. others
+default choice: [1]:
+2
+Do you want to turn on StatsD daemon?
+1. yes
+2. no
+default choice: [1]:
+2
+Do you want to monitor metrics from CollectD? WARNING: CollectD must be installed or the Agent will fail to start
+1. yes
+2. no
+default choice: [1]:
+2
+Do you want to monitor any host metrics? e.g. CPU, memory, etc.
+1. yes
+2. no
+default choice: [1]:
+1
+Do you want to monitor cpu metrics per core?
+1. yes
+2. no
+default choice: [1]:
+1
+Do you want to add ec2 dimensions (ImageId, InstanceId, InstanceType, AutoScalingGroupName) into all of your metrics if the info is available?
+1. yes
+2. no
+default choice: [1]:
+1
+Do you want to aggregate ec2 dimensions (InstanceId)?
+1. yes
+2. no
+default choice: [1]:
+1
+Would you like to collect your metrics at high resolution (sub-minute resolution)? This enables sub-minute resolution for all metrics, but you can customize for specific metrics in the output json file.
+1. 1s
+2. 10s
+3. 30s
+4. 60s
+default choice: [4]:
+4
+Which default metrics config do you want?
+1. Basic
+2. Standard
+3. Advanced
+4. None
+default choice: [1]:
+2
+Current config as follows:
+{
+        "agent": {
+                "metrics_collection_interval": 60,
+                "run_as_user": "root"
+        },
+        "metrics": {
+                "aggregation_dimensions": [
+                        [
+                                "InstanceId"
+                        ]
+                ],
+                "append_dimensions": {
+                        "AutoScalingGroupName": "${aws:AutoScalingGroupName}",
+                        "ImageId": "${aws:ImageId}",
+                        "InstanceId": "${aws:InstanceId}",
+                        "InstanceType": "${aws:InstanceType}"
+                },
+                "metrics_collected": {
+                        "cpu": {
+                                "measurement": [
+                                        "cpu_usage_idle",
+                                        "cpu_usage_iowait",
+                                        "cpu_usage_user",
+                                        "cpu_usage_system"
+                                ],
+                                "metrics_collection_interval": 60,
+                                "resources": [
+                                        "*"
+                                ],
+                                "totalcpu": false
+                        },
+                        "disk": {
+                                "measurement": [
+                                        "used_percent",
+                                        "inodes_free"
+                                ],
+                                "metrics_collection_interval": 60,
+                                "resources": [
+                                        "*"
+                                ]
+                        },
+                        "diskio": {
+                                "measurement": [
+                                        "io_time"
+                                ],
+                                "metrics_collection_interval": 60,
+                                "resources": [
+                                        "*"
+                                ]
+                        },
+                        "mem": {
+                                "measurement": [
+                                        "mem_used_percent"
+                                ],
+                                "metrics_collection_interval": 60
+                        },
+                        "swap": {
+                                "measurement": [
+                                        "swap_used_percent"
+                                ],
+                                "metrics_collection_interval": 60
+                        }
+                }
+        }
+}
+Are you satisfied with the above config? Note: it can be manually customized after the wizard completes to add additional items.
+1. yes
+2. no
+default choice: [1]:
+1
+Do you have any existing CloudWatch Log Agent (http://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AgentReference.html) configuration file to import for migration?
+1. yes
+2. no
+default choice: [2]:
+2
+Do you want to monitor any log files?
+1. yes
+2. no
+default choice: [1]:
+1
+Log file path:
+/var/log/messages
+Log group name:
+default choice: [messages]
+ec2-system-logs
+Log group class:
+1. STANDARD
+2. INFREQUENT_ACCESS
+default choice: [1]:
+1
+Log stream name:
+default choice: [{instance_id}]
+
+Log Group Retention in days
+1. -1
+2. 1
+3. 3
+4. 5
+5. 7
+6. 14
+7. 30
+8. 60
+9. 90
+10. 120
+11. 150
+12. 180
+13. 365
+14. 400
+15. 545
+16. 731
+17. 1096
+18. 1827
+19. 2192
+20. 2557
+21. 2922
+22. 3288
+23. 3653
+default choice: [1]:
+7
+Do you want to specify any additional log files to monitor?
+1. yes
+2. no
+default choice: [1]:
+2
+Do you want the CloudWatch agent to also retrieve X-ray traces?
+1. yes
+2. no
+default choice: [1]:
+2
+Existing config JSON identified and copied to:  /opt/aws/amazon-cloudwatch-agent/etc/backup-configs
+Saved config file to /opt/aws/amazon-cloudwatch-agent/bin/config.json successfully.
+Current config as follows:
+{
+        "agent": {
+                "metrics_collection_interval": 60,
+                "run_as_user": "root"
+        },
+        "logs": {
+                "logs_collected": {
+                        "files": {
+                                "collect_list": [
+                                        {
+                                                "file_path": "/var/log/messages",
+                                                "log_group_class": "STANDARD",
+                                                "log_group_name": "ec2-system-logs",
+                                                "log_stream_name": "{instance_id}",
+                                                "retention_in_days": 30
+                                        }
+                                ]
+                        }
+                }
+        },
+        "metrics": {
+                "aggregation_dimensions": [
+                        [
+                                "InstanceId"
+                        ]
+                ],
+                "append_dimensions": {
+                        "AutoScalingGroupName": "${aws:AutoScalingGroupName}",
+                        "ImageId": "${aws:ImageId}",
+                        "InstanceId": "${aws:InstanceId}",
+                        "InstanceType": "${aws:InstanceType}"
+                },
+                "metrics_collected": {
+                        "cpu": {
+                                "measurement": [
+                                        "cpu_usage_idle",
+                                        "cpu_usage_iowait",
+                                        "cpu_usage_user",
+                                        "cpu_usage_system"
+                                ],
+                                "metrics_collection_interval": 60,
+                                "resources": [
+                                        "*"
+                                ],
+                                "totalcpu": false
+                        },
+                        "disk": {
+                                "measurement": [
+                                        "used_percent",
+                                        "inodes_free"
+                                ],
+                                "metrics_collection_interval": 60,
+                                "resources": [
+                                        "*"
+                                ]
+                        },
+                        "diskio": {
+                                "measurement": [
+                                        "io_time"
+                                ],
+                                "metrics_collection_interval": 60,
+                                "resources": [
+                                        "*"
+                                ]
+                        },
+                        "mem": {
+                                "measurement": [
+                                        "mem_used_percent"
+                                ],
+                                "metrics_collection_interval": 60
+                        },
+                        "swap": {
+                                "measurement": [
+                                        "swap_used_percent"
+                                ],
+                                "metrics_collection_interval": 60
+                        }
+                }
+        }
+}
+Please check the above content of the config.
+The config file is also located at /opt/aws/amazon-cloudwatch-agent/bin/config.json.
+Edit it manually if needed.
+Do you want to store the config in the SSM parameter store?
+1. yes
+2. no
+default choice: [1]:
+2
+Program exits now.
+[ec2-user@ip-172-31-0-229 ~]$ 
 
 ---
 
